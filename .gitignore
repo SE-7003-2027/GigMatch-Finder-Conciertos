@@ -1,0 +1,18 @@
+# Editors and Environments
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating Systems
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and local databases
+*.log
+*.sqlite
+*.db
