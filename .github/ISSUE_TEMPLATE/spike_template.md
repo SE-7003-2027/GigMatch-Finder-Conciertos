@@ -1,6 +1,6 @@
 ---
 name: "Spike / Research 🔍"
-description: "Template for technical research tasks, API exploration, or proof of concept."
+about: "Template for technical research tasks, API exploration, or proof of concept."
 title: "[SPIKE] - "
 labels: ["spike", "research"]
 assignees: ""
