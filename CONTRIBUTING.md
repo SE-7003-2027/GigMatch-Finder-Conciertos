@@ -1,22 +1,22 @@
-# Contributing Guidelines for Gigmatch
+# 🤝 Guía de Contribución para Gigmatch
 
-Welcome to Gigmatch's development! To keep the project organized, we follow this workflow:
+¡Bienvenido al desarrollo de Gigmatch! Para mantener el proyecto organizado, seguimos el siguiente flujo de trabajo:
 
-## Branching Strategy
-We never work directly on `main`. All development must be done on a separate branch:
-- **Features:** `feature/task-name`
-- **Bugs:** `bugfix/bug-description`
+## 🌿 Estrategia de Ramas
+Nunca trabajamos directamente en `main`. Todo el desarrollo debe realizarse en una rama separada:
+- **Nuevas funcionalidades:** `feature/nombre-de-la-tarea`
+- **Corrección de errores:** `bugfix/descripcion-del-bug`
 
-## Commit Conventions
-We use *Conventional Commits*:
-- `feat:` For a new feature
-- `fix:` For a bug fix
-- `docs:` For documentation updates
-- `test:` For adding or modifying tests
+## 📦 Convenciones de Commits
+Utilizamos *Conventional Commits*:
+- `feat:` Para una nueva funcionalidad
+- `fix:` Para la corrección de un error (bug)
+- `docs:` Para actualizaciones de documentación
+- `test:` Para añadir o modificar pruebas
 
-Example: `feat: add date filter in search`
+Ejemplo: `feat: añade filtro de fechas en la búsqueda`
 
-## Creating Pull Requests (PRs)
-1. Ensure your branch is up to date with `main`.
-2. Fill out the PR template when creating it.
-3. Requires at least one peer review before merging.
+## 🚀 Creación de Pull Requests (PRs)
+1. Asegúrate de que tu rama esté actualizada con `main`.
+2. Llena la plantilla de PR al crearlo.
+3. Requiere al menos una revisión de un compañero (*peer review*) antes de fusionar.
