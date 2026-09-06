@@ -1,18 +1,18 @@
 ---
-name: "✨ Feature Request"
-about: Suggest an idea or requirement for Gigmatch
+name: "✨ Solicitud de Funcionalidad"
+about: Sugerir una idea o requerimiento para Gigmatch
 title: "[FEAT] "
 labels: 'enhancement'
 assignees: ''
 ---
 
-**1. Feature Description**
-A clear and concise description of what you want to achieve. (e.g., As a user, I want to be able to filter concerts by musical genre to find relevant events).
+## 💡 1. Descripción de la Funcionalidad
+Una descripción clara y concisa de lo que se quiere lograr. (ej., Como usuario, quiero poder filtrar conciertos por género musical para encontrar eventos relevantes).
 
-**2. Acceptance Criteria**
-List the requirements that must be met to consider this task complete:
-- [ ] The filter must appear on the main screen.
-- [ ] It must allow multiple selections.
+## ✅ 2. Criterios de Aceptación
+Lista los requerimientos que se deben cumplir para considerar esta tarea completa:
+- [ ] El filtro debe aparecer en la pantalla principal.
+- [ ] Debe permitir selecciones múltiples.
 
-**3. Technical Notes (Optional)**
-Any considerations regarding architecture or dependencies (to be filled when technologies are defined).
+## ⚙️ 3. Notas Técnicas (Opcionales)
+Cualquier consideración sobre arquitectura o dependencias (a rellenar cuando se definan las tecnologías).

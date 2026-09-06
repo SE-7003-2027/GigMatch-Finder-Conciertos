@@ -1,12 +1,12 @@
-## 📝 Description
-Briefly describe what this Pull Request solves or adds.
+## 📝 Descriptción
+Describa brevemente qué resuelve o añade este Pull Request.
 
 ## 🔗 Related Issue
-Closes # (Add the number of the Issue this resolves)
+Cierra el # (Agregue el número del Issue que esto resuelve)
 
-## ✅ Checklist
-- [ ] I have tested my changes locally.
-- [ ] The code follows the team's style guidelines.
-- [ ] It does not break existing functionalities.
+## ✅ Lista de Verificación
+- [ ] He probado mis cambios localmente.
+- [ ] El código sigue las pautas de estilo del equipo.
+- [ ] No rompe las funcionalidades existentes.
 
-## 🖼️ Screenshots (if applicable)
+## 🖼️ Capturas de pantalla (si aplica)
