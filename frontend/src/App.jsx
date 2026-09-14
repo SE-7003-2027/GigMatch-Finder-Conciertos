@@ -8,7 +8,10 @@ function App() {
   useEffect(() => {
     // React viaja al puerto 8000 y toca la puerta de FastAPI
     fetch("http://localhost:8000/")
-      .then(respuesta => respuesta.json())
+      .then(respuesta => {
+        if (!respuesta.ok) throw new Error("Error HTTP: " + respuesta.status);
+        return respuesta.json();
+      })
       .then(datos => {
         // Guardamos el mensaje del JSON en nuestra variable de estado
         setMensajeBackend(datos.mensaje)

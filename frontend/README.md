@@ -1,16 +1,53 @@
-# React + Vite
+# GigMatch - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interfaz de usuario desarrollada con **React**, **Vite** y **Tailwind CSS v4** para la plataforma GigMatch.
 
-Currently, two official plugins are available:
+## 📋 Requisitos Previos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Antes de ejecutar el proyecto, asegúrate de tener instalado en tu entorno:
+- **Node.js**: Versión `>=20.19.0` (Recomendado gestionar con NVM).
+- **Python**: Versión `3.10+` (para el servidor de backend).
+- **npm** (incluido con Node.js).
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Guía de Instalación y Ejecución
 
-## Expanding the ESLint configuration
+Para levantar el entorno completo de desarrollo, debes ejecutar el backend y el frontend en terminales separadas.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Levantar el Backend (FastAPI)
+
+Abre una terminal, navega a la carpeta del backend y configura el entorno virtual:
+
+```bash
+cd backend
+
+# Crear y activar el entorno virtual
+python3 -m venv venv
+source venv/bin/activate  # En Windows usa: venv\Scripts\activate
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Ejecutar el servidor de desarrollo
+uvicorn main:app --reload
+```
+
+> El backend estará disponible en http://localhost:8000
+
+
+### 2. Levantar el Frontend (React + Vite)
+
+Abre una segunda terminal, navega a la carpeta del frontend e instala las dependencias:
+
+```bash
+cd frontend
+
+# Instalar dependencias del proyecto
+npm install
+
+# Iniciar el servidor de desarrollo local
+npm run dev
+```
+
+> La interfaz gráfica estará disponible en http://localhost:5173.
