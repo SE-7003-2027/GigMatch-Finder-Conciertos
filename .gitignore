@@ -1,18 +1,11 @@
-# Editors and Environments
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Entornos y dependencias
+node_modules/
+venv/
+__pycache__/
+*.pyc
 
-# Operating Systems
-.DS_Store
-Thumbs.db
-desktop.ini
+# Variables de entorno
+.env
 
-# Logs and local databases
-*.log
-*.sqlite
+# Base de datos local
 *.db
