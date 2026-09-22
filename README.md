@@ -15,7 +15,16 @@ Currently in the requirements design and architecture planning phase.
 Core structures and database schemas are actively being defined.
 
 ## 🛠️ Technologies
-*(To be defined: Frontend, Backend, and Databases)*
+* **Backend:** Python with FastAPI
+* **Frontend:** JavaScript
+* **Database:** PostgreSQL
+* **Testing Tools:** Postman
+
+### 🔌 External Integrations (APIs)
+* **[Spotify Web API](https://developer.spotify.com/documentation/web-api):** OAuth 2.0 authentication and user listening history extraction.
+* **[Last.fm API](https://www.last.fm/api):** Recommendation algorithm and fetching "Similar Artists".
+* **[Ticketmaster Discovery API](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/):** Search for concerts, festivals, and ticket availability.
+* **[IP API](https://ip-api.com/docs):** User geolocation to recommend nearby events.
 
 
 
