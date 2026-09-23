@@ -1,10 +1,18 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
 from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
 from core.database import SessionLocal
+from api import auth
 
 app = FastAPI(title="GigMatch API", version="1.0.0")
+
+app.include_router(auth.router, prefix="/api")
 
 # Configuración de CORS
 app.add_middleware(
@@ -15,28 +23,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Dependencia para inyectar la sesion de BD en las peticiones que lo necesiten
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# Dependencia asíncrona para inyectar la sesión de BD
+async def get_db():
+    async with SessionLocal() as db:
+        try:
+            yield db
+        finally:
+            await db.close()
 
 @app.get("/")
 async def raiz():
     return {"mensaje": "¡Backend de GigMatch funcionando correctamente!"}
 
-#Endpoint para probar la db
+# Endpoint asíncrono para probar la db
 @app.get("/db")
-def probar_conexion(db: Session = Depends(get_db)):
+async def probar_conexion(db: AsyncSession = Depends(get_db)):
     try:
-        #Ejecutando un query directo para verificar la conexion
-        resultado = db.execute(text("SELECT 1")).scalar()
+        # Ejecutando un query directo con await para verificar la conexion
+        resultado = await db.execute(text("SELECT 1"))
+        valor = resultado.scalar()
         return {
             "status": "online",
             "database": "conectada",
-            "result": resultado
+            "result": valor
         }
     except Exception as e:
         return {
