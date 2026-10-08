@@ -131,7 +131,7 @@ class SpotifyService:
             top_artist_para_frontend.append({
                 "id_spotify": item["id"],
                 "nombre": item["name"],
-                "generos": item["genres"],
+                "generos": item.get("genres", []),
                 "imagen_url": imagen
             })
             
