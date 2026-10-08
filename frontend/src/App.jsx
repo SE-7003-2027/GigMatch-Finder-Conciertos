@@ -1,6 +1,5 @@
 import './index.css';
 
-// Datos de ejemplo: luego los puedes sustituir por tu API o estado.
 // "desp" controla el desfase de cada ficha (desp-1 o desp-2).
 // "foto" es opcional: si la pasas, se usa como imagen de fondo.
 const CONCIERTOS = [
