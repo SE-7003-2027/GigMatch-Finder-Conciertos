@@ -1,7 +1,7 @@
 import os
 import base64
 import httpx
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -32,8 +32,8 @@ class SpotifyService:
         Devuelve:
         - Token listo para usarse.
         """
-        # Si el token aún es válido, simplemente lo descifra y lo devuelve
-        if token_db.expiresat > datetime.now():
+        # Si el token aún es válido respecto al horario UTC que utiliza spotify, simplemente lo descifra y lo devuelve
+        if token_db.expiresat.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
             return decrypt_token(token_db.accesstoken)
 
         # Si expiró, requerimos de las credenciales
@@ -70,8 +70,8 @@ class SpotifyService:
         nuevo_access_token_visible = nuevos_datos["access_token"]
         token_db.accesstoken = encrypt_token(nuevo_access_token_visible)
         
-        # Calculamos la nueva fecha de expiración
-        token_db.expiresat = datetime.now() + timedelta(seconds=nuevos_datos["expires_in"])
+        # Calculamos la nueva fecha de expiracion en horario UTC
+        token_db.expiresat = datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(seconds=nuevos_datos["expires_in"])
 
         # Actualizacion de refresh token en caso de que Spotify lo requiera
         if "refresh_token" in nuevos_datos:
