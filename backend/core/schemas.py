@@ -32,3 +32,18 @@ class UsuarioCreate(UsuarioBase):
 class UsuarioOut(UsuarioBase):
     
     model_config = ConfigDict(from_attributes=True)
+
+
+# ==========================================
+# ESQUEMAS DEL TOP ARTISTAS
+# ==========================================
+class ArtistaOut(BaseModel):
+    """
+    Filtra la respuesta de la API de Spotify para enviar al frontend de 
+    GigMatch únicamente los datos necesarios que serviran para crear la GUI,
+    optimizando así el consumo de red.
+    """
+    id_spotify: str     # Id del artista/banda respecto a la bd de Spotify
+    nombre: str         # Nombre artistico (pseudonimo) registrado
+    generos: list[str]  # Generos asociados a su musica
+    imagen_url: str     # URL de la fotografia asociada
