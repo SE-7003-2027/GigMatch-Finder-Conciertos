@@ -1,7 +1,7 @@
 import './index.css';
 
-// "desp" controla el desfase de cada ficha (desp-1 o desp-2).
-// "foto" es opcional: si la pasas, se usa como imagen de fondo.
+// "desp" controla el desfase de cada ficha (desp-1 o desp-2)
+// "foto" es opcional: se usa como imagen de fondo
 const CONCIERTOS = [
   {
     id: 1,
