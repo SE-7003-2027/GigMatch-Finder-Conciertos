@@ -53,8 +53,9 @@ class AuthService:
             user_headers = {"Authorization": f"Bearer {token_data['access_token']}"}
             user_res = await client.get("https://api.spotify.com/v1/me", headers=user_headers)
             if user_res.status_code != 200:
-                raise ValueError("Error al obtener el perfil de Spotify")
-                
+                raise ValueError("Error al obtener el perfil de Spotify\n"
+                                 f"Mensaje de Spotify: {user_res.text}")
+
             user_data = user_res.json()
 
         # 3. Extraer datos y encriptar tokens
