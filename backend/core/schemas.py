@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
+from pydantic.alias_generators import to_camel
 
 # ==========================================
 # ESQUEMAS DE TOKEN
@@ -47,3 +48,28 @@ class ArtistaOut(BaseModel):
     nombre: str         # Nombre artistico (pseudonimo) registrado
     generos: list[str]  # Generos asociados a su musica
     imagen_url: str     # URL de la fotografia asociada
+
+# ==========================================
+# ESQUEMAS DE UBICACIÓN
+# ==========================================
+class UbicacionOut(BaseModel):
+    # Formato de respuesta de la API de geolocalización (IP-API o manual)
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    codigo_pais: str          # ISO 3166-1 alpha-2 (ej. "MX")
+    pais: str | None = None
+    ciudad: str | None = None
+    lat: float | None = None
+    lon: float | None = None
+    latlong: str | None = None 
+    radio_km: int | None = None
+    origen: str                 # "ip" o "manual"
+
+class PaisOut(BaseModel):
+    codigo: str
+    nombre: str
+
+class CiudadOut(BaseModel):
+    nombre: str
+    lat: float
+    lon: float
