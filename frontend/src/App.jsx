@@ -1,102 +1,83 @@
+import { useState } from 'react';
 import './index.css';
+import Login from './components/Login';
+import {
+  getStoredUser,
+  clearStoredUser,
+  parseAuthUrlParams,
+} from './services/authService';
 
-// "desp" controla el desfase de cada ficha (desp-1 o desp-2)
-// "foto" es opcional: se usa como imagen de fondo
-const CONCIERTOS = [
-  {
-    id: 1,
-    nombre: 'FESTIVAL',
-    fechas: '25 Y 26 DE SEPTIEMBRE DE 2026',
-    sede: 'PALACIO DE LOS DEPORTES',
-    desp: 'desp-1',
-    logo: true,
-  },
-  {
-    id: 2,
-    nombre: 'YOUNG MIKO',
-    fechas: '22 DE SEPTIEMBRE DE 2026',
-    sede: 'PALACIO DE LOS DEPORTES',
-    desp: 'desp-2',
-  },
-  {
-    id: 3,
-    nombre: 'MOTORAMA',
-    fechas: '01 DE OCTUBRE DE 2026',
-    sede: 'PALACIO DE LOS DEPORTES',
-    desp: 'desp-1',
-  },
-];
+/**
+ * Componente Principal de la Aplicación.
+ * Estilizado completamente con Tailwind CSS.
+ */
+export default function App() {
+  const [usuario, setUsuario] = useState(() => {
+    const { user } = parseAuthUrlParams();
+    return user || getStoredUser();
+  });
 
-function Campo({ etiqueta, valor, icono, nombre = false }) {
+  const handleLogout = () => {
+    clearStoredUser();
+    setUsuario(null);
+  };
+
+  // Si el usuario no ha iniciado sesión, mostramos la pantalla de Login
+  if (!usuario) {
+    return <Login onLoginSuccess={setUsuario} />;
+  }
+
+  // Vista autenticada del usuario (preparada para mostrar sus artistas principales)
   return (
-    <div className="campo-info">
-      <span className="etiqueta">{etiqueta}</span>
-      <div className={`caja-valor${nombre ? ' nombre' : ''}`}>
-        <span>{valor}</span>
-        <span className={`pixel-icon ${icono}`}></span>
-      </div>
-    </div>
-  );
-}
+    <div className="relative min-h-screen w-full bg-[#6798a8]">
+      {/* Encabezado retro */}
+      <header className="w-full h-[100px] bg-[#e0cba5] px-10 flex items-center justify-between border-b-4 border-[#111111]/20">
+        <h1 className="text-[22px] font-normal tracking-wider text-[#8b1f4d] drop-shadow-[3px_3px_0_#f0b3c6]">
+          GIGMATCH
+        </h1>
 
-function FichaConcierto({ concierto, onCerrar, onComprar }) {
-  const { nombre, fechas, sede, desp, logo, foto } = concierto;
-
-  return (
-    <section className={`ventana-concierto ${desp}`}>
-      <div className="barra-ventana">
-        <span>CONCIERTO</span>
-        <button className="btn-cerrar" onClick={() => onCerrar?.(concierto)}>X</button>
-      </div>
-
-      <div className="contenido-ventana">
-        <div className="col-izquierda">
-          <div
-            className={`foto-artista${logo ? ' logo' : ''}`}
-            style={foto ? { backgroundImage: `url(${foto})` } : undefined}
-          ></div>
-          <button className="btn-comprar" onClick={() => onComprar?.(concierto)}>
-            COMPRAR BOLETOS
+        <div className="flex items-center gap-4">
+          <span
+            className="text-[8px] text-[#4a1230] bg-white px-3 py-2 border-2 border-[#8b1f4d] shadow-[2px_2px_0_#111111]"
+            title={`ID Spotify: ${usuario.id_spotify}`}
+          >
+            👤 {usuario.nombre}
+          </span>
+          <button
+            type="button"
+            className="bg-[#9b2226] hover:bg-[#b52a2f] text-white border-2 border-[#111111] text-[7px] px-3 py-2 shadow-[2px_2px_0_#111111] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer transition-transform"
+            onClick={handleLogout}
+            title="Cerrar sesión de Spotify"
+          >
+            CERRAR SESIÓN
           </button>
         </div>
-
-        <div className="col-derecha">
-          <Campo etiqueta="ARTISTA /FESTIVAL:" valor={nombre} icono="flecha-guinda" nombre />
-          <Campo etiqueta="FECHA(S)" valor={fechas} icono="corazon-pixel-css" />
-          <Campo etiqueta="SEDE" valor={sede} icono="mapa-pixel-css" />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export default function Recomendaciones({ conciertos = CONCIERTOS }) {
-  return (
-    <div className="pagina">
-      {/* Encabezado */}
-      <header className="encabezado">
-        <h1 className="titulo-principal">PROXIMOS CONCIERTOS</h1>
-        <nav className="botones-navegacion">
-          <button className="btn-nav">TUS ARTISTAS</button>
-          <button className="btn-nav activo">RECOMENDACIONES</button>
-        </nav>
       </header>
 
-      {/* fichas */}
-      <div className="contenedor-principal">
-        <main className="lista-conciertos">
-          {conciertos.map((c) => (
-            <FichaConcierto key={c.id} concierto={c} />
-          ))}
-        </main>
-      </div>
-
-      {/* vinilo */}
-      <div className="seccion-vinilo">
-        <div className="vinyl-container">
-          <div className="vinyl-center-hole"></div>
-        </div>
-      </div>
+      {/* Tarjeta de bienvenida y estado de conexión */}
+      <main className="max-w-[700px] mx-auto my-14 px-4">
+        <section className="w-full bg-[#d9d9d9] border-4 border-[#111111] shadow-[8px_8px_0_#111111]">
+          <div className="bg-[#7b2b3a] text-white px-3.5 py-2 text-[9px] flex items-center justify-between">
+            <span>SESIÓN INICIADA CON SPOTIFY</span>
+          </div>
+          <div className="p-8 text-center text-[9px] leading-loose">
+            <p>
+              ¡Hola, <strong className="text-[#8b1f4d]">{usuario.nombre}</strong>!
+            </p>
+            <p className="mt-3">
+              Tu cuenta de Spotify (<span className="text-[#8b1f4d] font-bold">{usuario.id_spotify}</span>) ha sido vinculada correctamente.
+            </p>
+            <p className="mt-4 text-[8px] text-[#444444]">
+              A continuación conectaremos la consulta de tus artistas principales con el endpoint:
+            </p>
+            <div className="mt-3">
+              <code className="bg-[#e0cba5] text-[#111111] px-3 py-1.5 border border-[#111111] inline-block text-[8px]">
+                GET /spotify/{usuario.id_spotify}/top-artists
+              </code>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
