@@ -18,14 +18,22 @@ def login_spotify():
     return RedirectResponse(url)
 
 @router.get("/callback")
-async def spotify_callback(code: str, db: AsyncSession = Depends(get_db)):
+async def spotify_callback(code: str = None, error: str = None, db: AsyncSession = Depends(get_db)):
     """Recibe el código de Spotify, lo procesa y redirige al frontend."""
+    if error:
+        return RedirectResponse(url=f"http://localhost:5173/?error={error}")
+    
+    if not code:
+        return RedirectResponse(url="http://localhost:5173/?error=missing_code")
+
     try:
-        await AuthService.process_spotify_callback(code, db)
-        return RedirectResponse(url="http://localhost:5173/dashboard?login=success")
+        user_info = await AuthService.process_spotify_callback(code, db)
+        id_spotify = user_info.get("id_spotify", "") if isinstance(user_info, dict) else ""
+        nombre = user_info.get("usuario", "") if isinstance(user_info, dict) else ""
+        return RedirectResponse(url=f"http://localhost:5173/?login=success&id_spotify={id_spotify}&nombre={nombre}")
     
     except Exception as e:
         print("🚨 ERROR FATAL AL GUARDAR:", str(e))
         import traceback
         traceback.print_exc()
-        return RedirectResponse(url=f"http://localhost:5173/?error=auth_failed")
+        return RedirectResponse(url="http://localhost:5173/?error=auth_failed")
