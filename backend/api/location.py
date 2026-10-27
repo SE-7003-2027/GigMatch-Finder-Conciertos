@@ -1,12 +1,7 @@
 from fastapi import APIRouter, Query, Request
 
 from core.schemas import CiudadOut, PaisOut, UbicacionOut
-from services.geo_service import (
-    RADIO_DEFAULT_KM,
-    RADIO_MAX_KM,
-    RADIO_MIN_KM,
-    GeoService,
-)
+from services.geo_service import GeoService
 
 router = APIRouter(
     prefix="/location",
@@ -18,7 +13,6 @@ def obtener_ip_cliente(request: Request) -> str | None:
     """
     IP real del cliente. Detrás de un proxy/balanceador llega en
     X-Forwarded-For (primer valor); si no, se usa la conexión directa.
-    Solo confiar en este header si el proxy es tuyo.
     """
     forwarded = request.headers.get("x-forwarded-for")
     if forwarded:
@@ -27,20 +21,14 @@ def obtener_ip_cliente(request: Request) -> str | None:
 
 
 @router.get("/detect", response_model=UbicacionOut)
-async def detectar_ubicacion(
-    request: Request,
-    radio_km: int = Query(
-        RADIO_DEFAULT_KM, ge=RADIO_MIN_KM, le=RADIO_MAX_KM,
-        description="Radio de búsqueda de conciertos en km",
-    ),
-) -> UbicacionOut:
+async def detectar_ubicacion(request: Request) -> UbicacionOut:
     """
     Detecta país, ciudad y coordenadas del usuario a partir de su IP (IP-API).
 
     Devuelve también `latlong` con el formato "lat,long" listo para el
     parámetro latlong de Ticketmaster, y `codigoPais` (ej. MX) para countryCode.
     """
-    return await GeoService.detectar_por_ip(obtener_ip_cliente(request), radio_km)
+    return await GeoService.detectar_por_ip(obtener_ip_cliente(request))
 
 
 @router.get("/countries", response_model=list[PaisOut])
@@ -60,14 +48,10 @@ def listar_ciudades(
 @router.get("/resolve", response_model=UbicacionOut)
 def resolver_ubicacion(
     pais: str = Query(..., min_length=2, max_length=2, description="Código ISO, ej. MX"),
-    ciudad: str | None = Query(None, description="Nombre de la ciudad (opcional)"),
-    radio_km: int = Query(
-        RADIO_DEFAULT_KM, ge=RADIO_MIN_KM, le=RADIO_MAX_KM,
-        description="Radio de búsqueda en km (solo aplica con ciudad)",
-    ),
+    ciudad: str | None = Query(None, description="Nombre de la ciudad"),
 ) -> UbicacionOut:
     """
     Ubicación elegida manualmente por el usuario (botón 'cambiar ubicación').
     Mismo formato de respuesta que /location/detect.
     """
-    return GeoService.resolver_ubicacion_manual(pais, ciudad, radio_km)
+    return GeoService.resolver_ubicacion_manual(pais, ciudad)

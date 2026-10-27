@@ -15,10 +15,8 @@ IP_API_URL: str = "http://ip-api.com/json/"
 IP_API_FIELDS: str = "status,message,country,countryCode,city,lat,lon"
 CACHE_TTL_SEGUNDOS: int = 3600  # Evita gastar el límite de 45 peticiones/min por IP
 MIN_POBLACION_CIUDAD: int = 15000
-
-RADIO_MIN_KM: int = 10
-RADIO_MAX_KM: int = 100  
-RADIO_DEFAULT_KM: int = 40
+ 
+RADIO_DEFAULT_KM: int = 50
 
 _cache: dict[str, tuple[float, UbicacionOut]] = {}
 _gc: geonamescache.GeonamesCache = geonamescache.GeonamesCache()
@@ -54,7 +52,7 @@ def _con_radio(ubicacion: UbicacionOut, radio_km: int) -> UbicacionOut:
 
 
 def _indexar_ciudades() -> dict[str, list[dict]]:
-    """Agrupa las ciudades de geonamescache por código de país (una sola vez)."""
+    """Agrupa las ciudades de geonamescache por código de país."""
     global _ciudades_por_pais
     if _ciudades_por_pais is None:
         indice: dict[str, list[dict]] = {}
@@ -78,9 +76,7 @@ class GeoService:
     """
 
     @staticmethod
-    async def detectar_por_ip(
-        ip: str | None, radio_km: int = RADIO_DEFAULT_KM
-    ) -> UbicacionOut:
+    async def detectar_por_ip(ip: str | None) -> UbicacionOut:
         """
         Consulta IP-API y devuelve país, ciudad, coordenadas y radio de búsqueda.
 
@@ -176,8 +172,7 @@ class GeoService:
     @staticmethod
     def resolver_ubicacion_manual(
         codigo_pais: str,
-        ciudad: str | None = None,
-        radio_km: int = RADIO_DEFAULT_KM,
+        ciudad: str | None = None
     ) -> UbicacionOut:
         """
         Ubicación elegida por el usuario.
