@@ -76,7 +76,7 @@ class GeoService:
     """
 
     @staticmethod
-    async def detectar_por_ip(ip: str | None) -> UbicacionOut:
+    async def detectar_por_ip(ip: str | None, radio_km: int = RADIO_DEFAULT_KM) -> UbicacionOut:
         """
         Consulta IP-API y devuelve país, ciudad, coordenadas y radio de búsqueda.
 
@@ -172,7 +172,8 @@ class GeoService:
     @staticmethod
     def resolver_ubicacion_manual(
         codigo_pais: str,
-        ciudad: str | None = None
+        ciudad: str | None = None,
+        radio_km: int = RADIO_DEFAULT_KM
     ) -> UbicacionOut:
         """
         Ubicación elegida por el usuario.
