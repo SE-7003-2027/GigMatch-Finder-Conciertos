@@ -33,7 +33,7 @@ class SpotifyService:
         - Token listo para usarse.
         """
         # Si el token aún es válido respecto al horario UTC que utiliza spotify, simplemente lo descifra y lo devuelve
-        if token_db.expiresat.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
+        if token_db.expiresat.replace(tzinfo=timezone.utc) > datetime.now(timezone.utc):
             return decrypt_token(token_db.accesstoken)
 
         # Si expiró, requerimos de las credenciales

@@ -14,7 +14,7 @@ app = FastAPI(title="GigMatch API", version="1.0.0")
 
 # Configruacion de rutas
 app.include_router(auth.router, prefix="/api")
-app.include_router(artists.router)
+app.include_router(artists.router, prefix="/api")
 app.include_router(location.router, prefix="/api")
 
 # Configuración de CORS

@@ -99,4 +99,4 @@ class AuthService:
         # Confirmar los cambios en la base de datos
         await db.commit()
         
-        return {"message": "Autenticación exitosa", "usuario": nombre}
+        return {"message": "Autenticación exitosa", "usuario": nombre, "id_spotify": id_spotify}
