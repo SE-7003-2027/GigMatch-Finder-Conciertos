@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull_request: write
+      pull-request: write
 
     steps:
       - name: Checkout del código
@@ -23,7 +23,7 @@ jobs:
  
       - name: Build de Frontend
         run: |
-          cd Frontend
+          cd frontend
           npm install
           npm run build
 
@@ -34,7 +34,7 @@ jobs:
       
       - name: Instalar dependencias del backend
         run: |
-          cd Backend
+          cd backend
           pip install -r requirements.txt
           pytest tests/ -v
 
