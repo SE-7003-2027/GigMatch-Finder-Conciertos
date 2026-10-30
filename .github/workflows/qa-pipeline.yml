@@ -32,7 +32,13 @@ jobs:
         with:
           python-version: '3.12'   
       
-      - name: Instalar dependencias del backend
+      - name: Preparar y Ejecutar Pruebas (Backend)
+        env:
+          DATABASE_URL: "sqlite+aiosqlite:///:memory:"
+          SPOTIFY_CLIENT_ID: "dummy_id"
+          SPOTIFY_CLIENT_SECRET: "dummy_secret"
+          SPOTIFY_REDIRECT_URI: "http://127.0.0.1:8000/api/auth/callback"
+          ENCRYPTION_KEY: "llave_falsa_simulada_para_testing_ci="
         run: |
           cd backend
           pip install -r requirements.txt
