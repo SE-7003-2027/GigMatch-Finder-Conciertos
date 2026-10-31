@@ -1,0 +1,19 @@
+name: Promocion a Staging
+
+on:
+  push:
+    branches:
+      - qa
+
+jobs:
+  crear-pr-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Crear PR a Staging
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          gh pr create --base staging --head qa --title "Staging Release: Promoción desde QA" --body "Las pruebas en QA pasaron exitosamente. Este PR requiere aprobación manual del equipo antes de fusionarse."

@@ -1,0 +1,20 @@
+name: Promocion Automatica a QA
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  crear-pr-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Crear PR a QA y activar Auto-Merge
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          PR_URL=$(gh pr create --base qa --head dev --title "QA Release: Promoción automatizada desde dev" --body "Este PR fue generado automáticamente. Se fusionará solo si las pruebas de pytest pasan exitosamente.")
+          gh pr merge "$PR_URL" --auto --merge
