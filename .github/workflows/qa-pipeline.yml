@@ -1,0 +1,58 @@
+name: QA Pipeline - Pruebas y Auto-Merge
+
+on:
+  pull_request:
+    branches:
+      - qa 
+    
+jobs:
+  pruebas-y-merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js (Frontend)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
+ 
+      - name: Build de Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+      - name: Configurar Python (Backend)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'   
+      
+      - name: Preparar y Ejecutar Pruebas (Backend)
+        env:
+          DATABASE_URL: "sqlite+aiosqlite:///:memory:"
+          SPOTIFY_CLIENT_ID: "dummy_id"
+          SPOTIFY_CLIENT_SECRET: "dummy_secret"
+          SPOTIFY_REDIRECT_URI: "http://127.0.0.1:8000/api/auth/callback"
+          ENCRYPTION_KEY: "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWE="
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          pytest tests/ -v
+
+      - name: Aprobar y Fusionar PR Automáticamente
+        if: success()
+
+        env: 
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+
+        run: |
+          gh pr merge "$PR_URL" --auto --merge
+
+
+      
