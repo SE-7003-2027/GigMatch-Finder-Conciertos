@@ -18,7 +18,16 @@ En cada pasión, existe un artista que te inspira. **GigMatch** nace con el obje
 Actualmente en fase de diseño de requerimientos y planificación de la arquitectura.
 
 ## 🛠️ Tecnologías
-*(Por definir: Frontend, Backend y Bases de Datos)*
+* **Backend:** Python con FastAPI
+* **Frontend:** JavaScript
+* **Base de Datos:** PostgreSQL
+* **Herramientas de Pruebas:** Postman
+
+### 🔌 Servicios Externos (APIs)
+* **[Spotify Web API](https://developer.spotify.com/documentation/web-api):** Autenticación OAuth 2.0 y extracción del historial musical de los usuarios.
+* **[Last.fm API](https://www.last.fm/api):** Algoritmo de recomendación y obtención de "Artistas Similares".
+* **[Ticketmaster Discovery API](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/):** Búsqueda de conciertos, festivales y disponibilidad de boletos.
+* **[IP API](https://ip-api.com/docs):** Geolocalización del usuario para recomendar eventos cercanos.
 
 
 ## 📋 Gestión del Proyecto
