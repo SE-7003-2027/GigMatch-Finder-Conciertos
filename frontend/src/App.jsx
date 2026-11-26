@@ -3,6 +3,7 @@ import './index.css'
 import Login from "./components/Login";
 import TopArtistsView from "./components/TopArtistsView";
 import MainLayout from './components/MainLayout';
+import ProximosConciertosMock from "./components/ProximosConciertosMock";
 import { getStoredUser, clearStoredUser, parseAuthUrlParams } from './services/authService';
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
     const handleLogout = () => {
         clearStoredUser();
         setUsuario(null);
-        setVistaActual('artista');
+        setVistaActual('artistas');
     };
 
     if (!usuario) {
@@ -38,7 +39,7 @@ export default function App() {
             )}
 
             {vistaActual === 'recomendaciones' && (
-                <p>Recomendaciones de conciertos</p>
+                <ProximosConciertosMock />
             )}
         </MainLayout>
     );
