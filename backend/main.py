@@ -8,14 +8,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.database import SessionLocal
-from api import auth, artists, location
+from api import auth, artists, location, concerts
 
 app = FastAPI(title="GigMatch API", version="1.0.0")
 
-# Configruacion de rutas
+# Configuracion de rutas
 app.include_router(auth.router, prefix="/api")
 app.include_router(artists.router, prefix="/api")
 app.include_router(location.router, prefix="/api")
+app.include_router(concerts.router, prefix="/api")
 
 # Configuración de CORS
 app.add_middleware(

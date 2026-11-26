@@ -73,3 +73,20 @@ class CiudadOut(BaseModel):
     nombre: str
     lat: float
     lon: float
+
+# ==========================================
+# ESQUEMAS DE CONCIERTOS
+# ==========================================
+class ConciertoOut(BaseModel):
+    """
+    Filtra la respuesta de la API de Ticketmaster para enviar al frontend de 
+    GigMatch únicamente los datos necesarios, optimizando así el consumo de red.
+    """
+    id_ticketmaster: str
+    titulo: str
+    artista: str
+    fecha: str | None = None
+    recinto: str | None = None
+    ciudad: str | None = None
+    imagen_artista: str | None = None
+    url_compra: str | None = None

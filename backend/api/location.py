@@ -2,23 +2,12 @@ from fastapi import APIRouter, Query, Request
 
 from core.schemas import CiudadOut, PaisOut, UbicacionOut
 from services.geo_service import GeoService
+from utils.ip_util import obtener_ip_cliente
 
 router = APIRouter(
     prefix="/location",
     tags=["Contexto y Geolocalización"]
 )
-
-
-def obtener_ip_cliente(request: Request) -> str | None:
-    """
-    IP real del cliente. Detrás de un proxy/balanceador llega en
-    X-Forwarded-For (primer valor); si no, se usa la conexión directa.
-    """
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else None
-
 
 @router.get("/detect", response_model=UbicacionOut)
 async def detectar_ubicacion(request: Request) -> UbicacionOut:
